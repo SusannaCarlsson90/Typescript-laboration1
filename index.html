@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="sv">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -7,7 +7,37 @@
     <title>laboration-1</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main>
+      <h2>Kurser</h2>
+      <form id="courseForm">
+        <div> 
+          <label for="courseCode">Kurskod</label>
+          <input type="text" id="courseCode" placeholder="Ange kurskod">
+        </div>
+        <div> 
+          <label for="courseName">Kursnamn</label>
+          <input type="text" id="courseName" placeholder="Ange kursnamn">
+        </div>
+
+        <div> 
+          <label for="progression">Progression</label>
+        <select id="progression">
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+        </select>
+        </div>
+        <div> 
+          <label for="kursplan">Kursplan</label>
+          <input type="text" id="kursplan" placeholder="Ange länk till kursplan">
+        </div>
+
+        <button id="addCourseBtn">Lägg till</button>
+
+      </form>
+
+      <div id="courseTable"></div>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
