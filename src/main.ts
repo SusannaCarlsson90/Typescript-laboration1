@@ -32,6 +32,12 @@ const newCourse: courseInfo = {
   syllabus: syllabus.value,
 };
 
+//kontroll för dubletter kurskod
+const isDuplicate = courseList.some(course => course.code === courseCode.value);
+if (isDuplicate) {
+  alert("Kurskoden måste vara unik! Denna kurs finns redan");
+  return; //Avbryt funktionen så kursen ej läggs till
+}
 //"Puttar in värdet användaren skrivit ner in i min array courseList"
 courseList.push(newCourse);
 
