@@ -19,6 +19,7 @@ const courseName = document.getElementById('courseName') as HTMLInputElement;
 const progression = document.getElementById('progression') as HTMLSelectElement;
 const syllabus = document.getElementById('syllabus') as HTMLInputElement;
 const courseTable = document.getElementById('courseTable') as HTMLDivElement;
+const clearBtn = document.getElementById('clearBtn') as HTMLButtonElement;
 
 courseForm.addEventListener('submit', (e) => {
   e.preventDefault(); //Så sidan inte laddas om hela tiden
@@ -35,19 +36,37 @@ const newCourse: courseInfo = {
 courseList.push(newCourse);
 console.log(courseList);
 
-//Loopar igenom array och skapar HTML för varje enskild kurs
+//Tabellens struktur
+courseTable.innerHTML = `
+<table>
+<thead>
+<tr>
+<th>Kurskod</th>
+<th>Namn</th>
+<th>Progression</th>
+<th>Kursplan</th>
+</tr>
+</thead>
+<tbody id="courseBody"></tbody>
+</table>
+`;
 
-courseTable.innerHTML = ""; //Töm listan
+const courseBody = document.getElementById('courseBody') as HTMLElement;
 
-courseList.forEach((course) => { 
- courseTable.innerHTML += `
-<div> 
-      <p><strong>Kurskod:</strong> ${course.code}</p>
-      <p><strong>Namn:</strong> ${course.name}</p>
-      <p><strong>Progression:</strong> ${course.progression}</p>
-      <p><strong>Syllabus:</strong> ${course.syllabus}</p>
-    </div>
-  `;
+//Loopa igenom och fyll på rader i min tabell
+courseList.forEach((course) => {
+  courseBody.innerHTML += `
+  <tr>
+  <td>${course.code}</td>
+  <td>${course.name}</td>
+  <td>${course.progression}</td>
+  <td> <a href="${course.syllabus}" target="_blank">Länk </a> </td>
+  </tr>`;
+  
 });
 });
 
+//Händelselyssnare för att rensa formuläret 
+clearBtn.addEventListener('click', () => {
+  courseForm.reset();
+  });
