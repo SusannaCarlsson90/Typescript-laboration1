@@ -1,7 +1,7 @@
-import { StorageUtility } from './utils/storage';
+import { StorageUtility, StorageKeys } from './utils/storage';
 
 //Skapar en array som bara får innehålla objekt som ser ut som mitt courseInfo interface
-let courseList: courseInfo[] = [];
+let courseList: courseInfo[] = StorageUtility.getItem<courseInfo[]>(StorageKeys.COURSES) || [];
 
 //Interface för att säkerhetsställa att alla värden skrivs in korrekt. 
 interface courseInfo {
@@ -34,6 +34,8 @@ const newCourse: courseInfo = {
 
 //"Puttar in värdet användaren skrivit ner in i min array courseList"
 courseList.push(newCourse);
+
+StorageUtility.setItem(StorageKeys.COURSES, courseList);
 
 displayCourses();
 courseForm.reset();
@@ -74,3 +76,5 @@ courseList.forEach((course) => {
   </tr>`;
   
 })};
+
+displayCourses(); //anropar för att det som är sparat ska synas även om ingen tryckt på knappen lägg till i formuläret
