@@ -34,9 +34,19 @@ const newCourse: courseInfo = {
 
 //"Puttar in värdet användaren skrivit ner in i min array courseList"
 courseList.push(newCourse);
-console.log(courseList);
 
-//Tabellens struktur
+displayCourses();
+courseForm.reset();
+
+});
+
+//Händelselyssnare för att rensa formuläret 
+clearBtn.addEventListener('click', () => {
+  courseForm.reset();
+  });
+
+  function displayCourses(): void {
+  //Tabellens struktur
 courseTable.innerHTML = `
 <table>
 <thead>
@@ -63,10 +73,4 @@ courseList.forEach((course) => {
   <td> <a href="${course.syllabus}" target="_blank">Länk </a> </td>
   </tr>`;
   
-});
-});
-
-//Händelselyssnare för att rensa formuläret 
-clearBtn.addEventListener('click', () => {
-  courseForm.reset();
-  });
+})};
