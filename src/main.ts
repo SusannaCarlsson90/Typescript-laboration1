@@ -66,15 +66,33 @@ courseTable.innerHTML = `
 const courseBody = document.getElementById('courseBody') as HTMLElement;
 
 //Loopa igenom och fyll på rader i min tabell
-courseList.forEach((course) => {
+courseList.forEach((course, index) => {
   courseBody.innerHTML += `
   <tr>
   <td>${course.code}</td>
   <td>${course.name}</td>
   <td>${course.progression}</td>
   <td> <a href="${course.syllabus}" target="_blank">Länk </a> </td>
+  <td><button class="delete-btn" data-index="${index}">Radera</button></td>
   </tr>`;
-  
+  addDeleteListeners();
 })};
+
+function addDeleteListeners(): void {
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      const target = e.target as HTMLButtonElement;
+      const index = parseInt(target.getAttribute('data-index') || "0");
+    
+      courseList.splice(index, 1);
+
+      //Uppdatera localStorage med nya listan
+      StorageUtility.setItem(StorageKeys.COURSES, courseList);
+
+      displayCourses();
+    });
+  });
+}
 
 displayCourses(); //anropar för att det som är sparat ska synas även om ingen tryckt på knappen lägg till i formuläret
