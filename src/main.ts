@@ -81,8 +81,11 @@ courseList.forEach((course, index) => {
   <td> <a href="${course.syllabus}" target="_blank">Länk </a> </td>
   <td><button class="delete-btn" data-index="${index}">Radera</button></td>
   </tr>`;
-  addDeleteListeners();
-})};
+  
+});
+
+addDeleteListeners(); 
+}
 
 function addDeleteListeners(): void {
   const deleteButtons = document.querySelectorAll('.delete-btn');
