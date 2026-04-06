@@ -1,6 +1,8 @@
+
+//Hämtar sparade kurser från webbläsarens minne direkt när sidan laddas
 import { StorageUtility, StorageKeys } from './utils/storage';
 
-//Skapar en array som bara får innehålla objekt som ser ut som mitt courseInfo interface
+//Om minnet är tomt (null), skapar vi en tom lista [] så att programmet inte kraschar.
 let courseList: courseInfo[] = StorageUtility.getItem<courseInfo[]>(StorageKeys.COURSES) || [];
 
 //Interface för att säkerhetsställa att alla värden skrivs in korrekt. 
@@ -11,7 +13,7 @@ interface courseInfo {
   syllabus: string;
 }
 
-//Hämtar mina html element
+//Hämtar mina html element och använder as html 
 
 const courseForm = document.getElementById('courseForm') as HTMLFormElement;
 const courseCode = document.getElementById('courseCode') as HTMLInputElement;
@@ -41,7 +43,7 @@ if (isDuplicate) {
 //"Puttar in värdet användaren skrivit ner in i min array courseList"
 courseList.push(newCourse);
 
-StorageUtility.setItem(StorageKeys.COURSES, courseList);
+StorageUtility.setItem(StorageKeys.COURSES, courseList); // SPARAR: Här skickar vi hela den uppdaterade listan till localStorage. Utan denna rad försvinner den nya kursen om  sidan laddas om 
 
 displayCourses();
 courseForm.reset();
@@ -53,9 +55,9 @@ clearBtn.addEventListener('click', () => {
   courseForm.reset();
   });
 
-  function displayCourses(): void {
-  //Tabellens struktur
-courseTable.innerHTML = `
+  function displayCourses(): void {  
+  //Tabellens struktur nedan. Här rensas den gamla tabellen och ritar upp en ny tom tabell med rubriker. Genom att använda = istället för += så töms allt gammalt innehåll först.
+courseTable.innerHTML = ` 
 <table>
 <thead>
 <tr>
@@ -92,14 +94,14 @@ function addDeleteListeners(): void {
   deleteButtons.forEach(button => {
     button.addEventListener('click', (e) => {
       const target = e.target as HTMLButtonElement;
-      const index = parseInt(target.getAttribute('data-index') || "0");
+      const index = parseInt(target.getAttribute('data-index') || "0"); //Hämtar siffran från "data-index" för att veta vilken rad som klickades på 
     
-      courseList.splice(index, 1);
+      courseList.splice(index, 1); //Tar bort 1 element ur course-list på specifik position (index)
 
       //Uppdatera localStorage med nya listan
       StorageUtility.setItem(StorageKeys.COURSES, courseList);
 
-      displayCourses();
+      displayCourses(); //Rita om tabellen så raden försvinner från skärmen
     });
   });
 }
